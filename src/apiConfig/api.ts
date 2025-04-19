@@ -11,7 +11,7 @@ export const createTodo = (data: { todo: string; completed?: boolean; userId: nu
   API.post('/todos/add', data);
 
 export const updateTodo = (id: number, data: Partial<Todo>) =>
-  API.patch(`/todos/${id}`, data);
+  API.put(`/todos/${id}`, data);
 
 export const deleteTodo = (id: number) =>
   API.delete(`/todos/${id}`);

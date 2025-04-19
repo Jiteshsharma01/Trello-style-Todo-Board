@@ -6,8 +6,8 @@ import AddStatusModal from '../AddStatusModal/AddStatusModal';
 import { 
   fetchTodos, 
   addStatus, 
-  deleteStatus, 
-  updateTodoStatus 
+  deleteStatus,
+  updateTodoStatus,
 } from '../../store/actions/boardActions';
 
 const Board: React.FC = () => {
@@ -47,7 +47,7 @@ const Board: React.FC = () => {
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={() => setShowAddStatusModal(true)}
-          className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+          className="px-4 py-2 rounded border hover:text-blue-600 hover:border hover:border-blue-600 transition-colors"
           aria-label="Add new status"
         >
           + Add Status

@@ -53,13 +53,13 @@ const AddStatusModal: React.FC<AddStatusModalProps> = ({
             <button 
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border rounded hover:bg-gray-100"
+              className="px-4 py-2 border text-red-500 hover:text-red-700"
             >
               Cancel
             </button>
             <button 
               type="submit"
-              className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600"
+              className="px-4 py-2 border text-blue-500 hover:text-blue-700 rounded"
             >
               Add Status
             </button>
