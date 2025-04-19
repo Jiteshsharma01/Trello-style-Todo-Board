@@ -3,5 +3,16 @@ export interface Todo {
   todo: string;
   completed: boolean;
   userId: number;
-  status: "Pending" | "In Progress" | "Completed";
+  status?: string;
+}
+
+export interface BoardState {
+  todos: Todo[];
+  loading: boolean;
+  error: string | null;
+  statuses: string[];
+}
+
+export interface RootState {
+  board: BoardState;
 }
