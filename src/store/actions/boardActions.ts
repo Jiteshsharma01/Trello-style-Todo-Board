@@ -33,15 +33,34 @@ export const fetchTodos = (): AppThunk => async (dispatch) => {
   }
 };
 
-export const addTodo = (todoData: { todo: string; userId: number }): AppThunk => async (dispatch) => {
+export const addTodo = (todoData: { 
+  todo: string; 
+  status: string;
+  completed?: boolean;
+  userId: number 
+}): AppThunk => async (dispatch) => {
   try {
-    const response = await apiCreateTodo(todoData);
+    const response = await apiCreateTodo({
+      todo: todoData.todo,
+      completed: todoData.status === 'Completed',
+      userId: todoData.userId
+    });
+
     dispatch({
       type: ADD_TODO,
-      payload: { ...response.data, status: 'Pending' }
+      payload: { 
+        ...response.data,
+        status: todoData.status,
+        // id: response.data.id ?? Date.now()   //response id must be unique
+        id: Date.now()
+      }
     });
   } catch (error) {
     console.error('Error adding todo:', error);
+    dispatch({
+      type: FETCH_TODOS_FAILURE,
+      payload: `Failed to add todo: ${(error as Error).message}`
+    });
   }
 };
 
@@ -63,7 +82,7 @@ export const updateTodoStatus = (id: number, status: string): AppThunk => async 
       payload: { ...todo, status }
     });
   } catch (error) {
-    console.error('Error updating todo:', error);
+    console.error('Error updating todo status:', error);
   }
 };
 
@@ -73,17 +92,12 @@ export const updateTodo = (updatedTodo: Todo): AppThunk => async (dispatch) => {
       todo: updatedTodo.todo,
       completed: updatedTodo.status === 'Completed'
     });
-    
     dispatch({
       type: UPDATE_TODO,
       payload: updatedTodo
     });
   } catch (error) {
     console.error('Error updating todo:', error);
-    dispatch({
-      type: FETCH_TODOS_FAILURE,
-      payload: `Failed to update todo: ${error}`
-    });
   }
 };
 

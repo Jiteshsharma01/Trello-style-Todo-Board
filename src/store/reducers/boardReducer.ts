@@ -26,7 +26,8 @@ const boardReducer = (state = initialState, action: any) => {
     case FETCH_TODOS_FAILURE:
       return { ...state, loading: false, error: action.payload };
     case ADD_TODO:
-      return { ...state, todos: [...state.todos, action.payload] };
+      // add latest to initial
+      return { ...state, todos: [action.payload, ...state.todos] };
     case UPDATE_TODO:
       return {
         ...state,

@@ -75,22 +75,22 @@ const TodoCard: React.FC<TodoCardProps> = ({ todo, onDragStart, onEdit, onDelete
         </div>
       ) : (
         <>
-          <div className="font-medium">{todo.todo}</div>
+          <p className="font-medium line-clamp-2">{todo.todo}</p>
           {isHovered && (
-            <div className="mt-2 flex justify-between">
+            <div className="mt-2 flex justify-end gap-3">
               <button 
                 onClick={handleEditClick}
-                className="text-sm text-blue-500 hover:text-blue-700"
+                className="cursor-pointer text-sm"
                 aria-label="Edit todo"
               >
-                Edit
+                ✏️
               </button>
               <button
                 onClick={() => onDelete(todo.id)}
-                className="text-sm text-red-500 hover:text-red-700"
+                className="cursor-pointer text-sm"
                 aria-label="Delete todo"
               >
-                Delete
+                🗑️
               </button>
             </div>
           )}
