@@ -2,6 +2,8 @@ import React from 'react';
 import { Todo } from '../../types';
 import DropArea from '../DropArea/DropArea';
 import TodoCard from '../TodoCard/TodoCard';
+import { useAppDispatch } from '../../store/hooks';
+import { removeTodo, updateTodo } from '../../store/actions/boardActions';
 
 interface LaneProps {
   status: string;
@@ -18,8 +20,9 @@ const Lane: React.FC<LaneProps> = ({
   onDragStart,
   onDrop,
   canDelete,
-  onDeleteStatus
+  onDeleteStatus,
 }) => {
+  const dispatch = useAppDispatch();
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
@@ -50,6 +53,8 @@ const Lane: React.FC<LaneProps> = ({
             <TodoCard
               todo={todo}
               onDragStart={onDragStart}
+              onEdit={(editedTodo) => dispatch(updateTodo(editedTodo))}
+              onDelete={(id) => dispatch(removeTodo(id))}
             />
             <DropArea onDrop={() => onDrop(status, index + 1)} />
           </React.Fragment>

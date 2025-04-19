@@ -6,8 +6,8 @@ import AddStatusModal from '../AddStatusModal/AddStatusModal';
 import { 
   fetchTodos, 
   addStatus, 
-  deleteStatus, 
-  updateTodoStatus 
+  deleteStatus,
+  updateTodoStatus,
 } from '../../store/actions/boardActions';
 
 const Board: React.FC = () => {

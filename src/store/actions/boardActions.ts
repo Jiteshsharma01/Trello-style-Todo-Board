@@ -67,6 +67,26 @@ export const updateTodoStatus = (id: number, status: string): AppThunk => async 
   }
 };
 
+export const updateTodo = (updatedTodo: Todo): AppThunk => async (dispatch) => {
+  try {
+    await apiUpdateTodo(updatedTodo.id, { 
+      todo: updatedTodo.todo,
+      completed: updatedTodo.status === 'Completed'
+    });
+    
+    dispatch({
+      type: UPDATE_TODO,
+      payload: updatedTodo
+    });
+  } catch (error) {
+    console.error('Error updating todo:', error);
+    dispatch({
+      type: FETCH_TODOS_FAILURE,
+      payload: `Failed to update todo: ${error}`
+    });
+  }
+};
+
 export const removeTodo = (id: number): AppThunk => async (dispatch) => {
   try {
     await apiDeleteTodo(id);

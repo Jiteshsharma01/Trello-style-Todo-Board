@@ -25,10 +25,13 @@ const DropArea: React.FC<DropAreaProps> = ({ onDrop }) => {
   return (
     <div
       onDragOver={handleDragOver}
+      onDragEnter={() => setIsActive(true)}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={`h-2 transition-all ${isActive ? 'bg-blue-200' : 'bg-transparent'}`}
-    />
+      className={`h-2 transition-all ${isActive ? 'h-[50px] border border-dashed rounded-lg opacity-70 p-2 text-sm' : 'bg-transparent opacity-0'}`}
+    >
+      Drop Here
+    </div>
   );
 };
 
