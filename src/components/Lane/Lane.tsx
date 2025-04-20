@@ -105,7 +105,10 @@ const Lane: React.FC<LaneProps> = ({
                 Add
               </button>
               <button
-                onClick={() => setIsAddingTodo(false)}
+                onClick={() => {
+                  setNewTodoText('');
+                  setIsAddingTodo(false);
+                }}
                 className="text-sm bg-gray-200 px-2 py-1 rounded"
               >
                 Cancel

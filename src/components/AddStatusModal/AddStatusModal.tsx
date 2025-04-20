@@ -52,7 +52,10 @@ const AddStatusModal: React.FC<AddStatusModalProps> = ({
           <div className="flex justify-end gap-2">
             <button 
               type="button"
-              onClick={onClose}
+              onClick={() => {
+                setNewStatus('');
+                onClose()
+              }}
               className="px-4 py-2 border text-red-500 hover:text-red-700"
             >
               Cancel
