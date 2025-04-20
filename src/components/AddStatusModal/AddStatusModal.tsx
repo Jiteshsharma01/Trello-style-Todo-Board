@@ -16,6 +16,12 @@ const AddStatusModal: React.FC<AddStatusModalProps> = ({
   const [newStatus, setNewStatus] = useState('');
   const [error, setError] = useState('');
 
+  const handleClose = () => {
+    onClose();
+    setNewStatus('');
+    setError('');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newStatus.trim()) {
@@ -34,7 +40,7 @@ const AddStatusModal: React.FC<AddStatusModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-[#1a1a1ae0] flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-96">
         <h2 className="text-xl font-bold mb-4">Add New Status</h2>
         
@@ -52,11 +58,8 @@ const AddStatusModal: React.FC<AddStatusModalProps> = ({
           <div className="flex justify-end gap-2">
             <button 
               type="button"
-              onClick={() => {
-                setNewStatus('');
-                onClose()
-              }}
-              className="px-4 py-2 border text-red-500 hover:text-red-700"
+              onClick={handleClose}
+              className="px-4 py-2 border text-red-500 hover:text-red-700 rounded"
             >
               Cancel
             </button>
