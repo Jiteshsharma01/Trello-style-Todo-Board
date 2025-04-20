@@ -30,12 +30,16 @@ const Board: React.FC = () => {
     dispatch(deleteStatus(status));
   };
 
-  const handleDrop = (status: string) => {
+  const handleDrop = (status: string, position: number) => {
     if (!draggedTodo) return;
     
-    // Check if the status is actually changing
-    if (draggedTodo.status !== status) {
-      dispatch(updateTodoStatus(draggedTodo.id, status));
+    // Check if position actually changed
+    const currentTodosInLane = todos.filter(t => t.status === status);
+    const currentPosition = currentTodosInLane.findIndex(t => t.id === draggedTodo.id);
+    
+    // Only dispatch if status changed or position changed
+    if (draggedTodo.status !== status || currentPosition !== position) {
+      dispatch(updateTodoStatus(draggedTodo.id, status, position));
     }
     setDraggedTodo(null);
   };

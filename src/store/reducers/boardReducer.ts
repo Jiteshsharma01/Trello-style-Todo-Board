@@ -8,6 +8,7 @@ import {
   DELETE_TODO,
   ADD_STATUS,
   DELETE_STATUS,
+  UPDATE_TODOS_ORDER,
 } from "../actions/boardActions";
 
 const initialState: BoardState = {
@@ -49,6 +50,11 @@ const boardReducer = (state = initialState, action: any) => {
       return {
         ...state,
         statuses: state.statuses.filter((s) => s !== action.payload),
+      };
+    case UPDATE_TODOS_ORDER:
+      return {
+        ...state,
+        todos: action.payload
       };
     default:
       return state;
