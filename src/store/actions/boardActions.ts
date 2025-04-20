@@ -15,6 +15,7 @@ export const UPDATE_TODO = 'UPDATE_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_STATUS = 'ADD_STATUS';
 export const DELETE_STATUS = 'DELETE_STATUS';
+export const UPDATE_TODOS_ORDER = 'UPDATE_TODOS_ORDER';
 
 export const fetchTodos = (): AppThunk => async (dispatch) => {
   dispatch({ type: FETCH_TODOS_REQUEST });
@@ -64,22 +65,64 @@ export const addTodo = (todoData: {
   }
 };
 
-export const updateTodoStatus = (id: number, status: string): AppThunk => async (dispatch, getState) => {
+export const updateTodoStatus = (
+  id: number, 
+  status: string, 
+  newIndex?: number
+): AppThunk => async (dispatch, getState) => {
   const { board } = getState();
   const todo = board.todos.find((t: Todo) => t.id === id);
   
   if (!todo) return;
 
   try {
-    // Update in DummyJSON (though it doesn't have status field)
+    // 1. First update the status in the backend (if supported)
     await apiUpdateTodo(id, { 
       completed: status === 'Completed',
       todo: todo.todo 
+      // Note: DummyJSON doesn't support status field, so we're just updating what we can
     });
     
+    // 2. Get current todos and prepare the update
+    const currentTodos = [...board.todos];
+    
+    // 3. Remove the todo from its current position
+    const todoIndex = currentTodos.findIndex(t => t.id === id);
+    if (todoIndex === -1) return;
+    
+    const [movedTodo] = currentTodos.splice(todoIndex, 1);
+    
+    // 4. If newIndex is provided, find the correct position to insert
+    if (typeof newIndex !== 'undefined') {
+      // Get all todos with the new status
+      const targetStatusTodos = currentTodos.filter(t => t.status === status);
+      
+      // Determine insertion point
+      if (newIndex >= targetStatusTodos.length) {
+        // Append to end
+        currentTodos.push({ ...movedTodo, status });
+      } else if (newIndex <= 0) {
+        // Insert at beginning
+        const firstTargetIndex = currentTodos.findIndex(t => t.status === status);
+        currentTodos.splice(
+          firstTargetIndex >= 0 ? firstTargetIndex : currentTodos.length, 
+          0, 
+          { ...movedTodo, status }
+        );
+      } else {
+        // Insert between two todos
+        const targetTodo = targetStatusTodos[newIndex - 1];
+        const insertIndex = currentTodos.findIndex(t => t.id === targetTodo.id) + 1;
+        currentTodos.splice(insertIndex, 0, { ...movedTodo, status });
+      }
+    } else {
+      // Just change status without reordering
+      currentTodos.push({ ...movedTodo, status });
+    }
+    
     dispatch({
-      type: UPDATE_TODO,
-      payload: { ...todo, status }
+      type: UPDATE_TODOS_ORDER,
+      payload: currentTodos
     });
   } catch (error) {
     console.error('Error updating todo status:', error);
