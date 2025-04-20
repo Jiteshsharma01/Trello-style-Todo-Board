@@ -9,6 +9,7 @@ import {
   deleteStatus,
   updateTodoStatus,
 } from '../../store/actions/boardActions';
+import BoardSkeleton from './BoardSkeleton';
 
 const Board: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +40,7 @@ const Board: React.FC = () => {
     setDraggedTodo(null);
   };
 
-  if (loading) return <div className="p-4 text-center">Loading todos...</div>;
+  if (loading) return <BoardSkeleton />;
   if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
 
   return (
