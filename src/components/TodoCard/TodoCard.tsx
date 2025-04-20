@@ -61,13 +61,13 @@ const TodoCard: React.FC<TodoCardProps> = ({ todo, onDragStart, onEdit, onDelete
           <div className="flex justify-end gap-2 mt-2">
             <button 
               onClick={handleSave}
-              className="text-sm text-blue-500 hover:text-blue-700 px-2 py-1 rounded"
+              className="border text-sm text-blue-500 hover:text-blue-700 px-2 py-1 rounded"
             >
               Save
             </button>
             <button 
               onClick={handleCancel}
-              className="text-sm text-red-500 hover:text-red-700 px-2 py-1 rounded"
+              className="border text-sm text-red-500 hover:text-red-700 px-2 py-1 rounded"
             >
               Cancel
             </button>

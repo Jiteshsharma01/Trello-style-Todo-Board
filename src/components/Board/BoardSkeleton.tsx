@@ -3,7 +3,7 @@ import { useAppSelector } from "../../store/hooks";
 import { RootState } from "../../types";
 import LaneSkeleton from "../Lane/LaneSkeleton";
 
-const BoardSkeleton = () => {
+const BoardSkeleton: React.FC = () => {
   const { statuses } = useAppSelector((state: RootState) => state.board);
   const laneTodos = Array.from({ length: 5 }).map((_todo, idx) => ({
     id: idx,
